@@ -2,7 +2,9 @@ import { loadMenu } from './menuTab'
 import { loadHome } from './homeTab'
 import { loadContact } from './contactTab'
 
-import './styles/main.scss'
+import('./styles/main.scss').catch(error => {
+	console.error('scss loading failure:', error)
+})
 
 const createDefaultContent = (() => {
 	const content = document.getElementById('content')
@@ -70,26 +72,27 @@ loadContent()
 
 function setCurrentTab(e) {
 	const container = document.querySelector('.container')
-	container.innerHTML = ''
 	const navTabs = document.querySelectorAll('nav div')
 	navTabs.forEach(tab => {
 		tab.classList.remove('active')
 	})
 	if (e.target.id == 'home') {
+		container.innerHTML = ''
 		e.target.classList.add('active')
 		loadHome()
 	}
 	if (e.target.id == 'menu') {
+		container.innerHTML = ''
 		e.target.classList.add('active')
 		loadMenu()
 	}
 	if (e.target.id == 'contact') {
+		container.innerHTML = ''
 		e.target.classList.add('active')
 		loadContact()
 	}
 }
 
-// window.addEventListener('load', loadContent)
 document.querySelectorAll('nav').forEach(tab => {
 	tab.addEventListener('click', setCurrentTab)
 })
